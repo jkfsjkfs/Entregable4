@@ -46,3 +46,50 @@ h1:focus {
     .table th {
         background-color: #f2f2f2;
     }
+
+
+
+
+.navbar {
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+    .navbar ul {
+        display: flex;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .navbar li {
+        margin: 0 10px;
+    }
+
+    .navbar a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+    }
+
+.main-content {
+    display:block;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* Ajusta la altura mínima según tus necesidades y la altura de la barra de navegación */
+    text-align: center;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1, h2, h4 {
+    text-align: center;
+}
