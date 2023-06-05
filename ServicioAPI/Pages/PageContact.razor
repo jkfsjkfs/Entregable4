@@ -1,0 +1,49 @@
+﻿@page "/PageContact"
+
+<h3>Formulario de contacto</h3>
+
+<form>
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" @bind="nombre" />
+    </div>
+    <div class="form-group">
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" class="form-control" id="correo" @bind="correo" />
+    </div>
+    <div class="form-group">
+        <label for="telefono">Número de Teléfono:</label>
+        <input type="tel" class="form-control" id="telefono" @bind="telefono" />
+    </div>
+    <div class="form-group">
+        <label for="mensaje">Mensaje:</label>
+        <textarea class="form-control" id="mensaje" rows="3" @bind="mensaje"></textarea>
+    </div>
+
+    <button class="btn btn-primary" @onclick="EnviarFormulario">Enviar</button>
+</form>
+
+@if (enviado)
+{
+    <div class="contacto-enviado">
+        <h4>¡Mensaje enviado!</h4>
+        <p>Hola soy, @nombre. Quiero contactarme con ustedes por lo siguiente:</p>
+        <p>@mensaje</p>
+        <p>Pueden comunicarse conmigo en:</p>
+        <p>Correo electrónico: @correo</p>
+        <p>Teléfono: @telefono</p>
+    </div>
+}
+
+@code {
+    string nombre;
+    string correo;
+    string telefono;
+    string mensaje;
+    bool enviado = false;
+
+    void EnviarFormulario()
+    {
+        enviado = true;
+    }
+}

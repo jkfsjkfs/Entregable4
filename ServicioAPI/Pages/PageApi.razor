@@ -1,0 +1,82 @@
+﻿@using ServicioAPI.Pages.Models;
+
+@page "/PageApi"
+
+<h3>Lista de Usuarios de la API</h3>
+
+
+@if (users == null)
+{
+    <p>Cargando usuarios...</p>
+}
+else if (users.Count == 0)
+{
+    <p>No se encontraron usuarios.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>...</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.id</td>
+                    <td>@user.name</td>
+                    <td>@user.username</td>
+                    <td>@user.email</td>
+                    <td>@user.address.street, @user.address.suite, @user.address.city, @user.address.zipcode</td>
+                    <td><a href="/api/@user.id/details">Ver detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+    List<User> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Realiza la llamada a la API para obtener los elementos
+        users = await ObtenerUsersFromApi();
+    }
+
+
+
+
+    async Task<List<User>> ObtenerUsersFromApi()
+    {
+        using (var httpClient = new HttpClient())
+        {
+            var response = await httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(json);
+                return users;
+            }
+            else
+            {
+                // Manejo de error en caso de que la solicitud no sea exitosa
+                // Puedes agregar aquí la lógica de manejo de errores adecuada para tu aplicación
+                return new List<User>();
+            }
+        }
+    }
+
+
+}
+
+

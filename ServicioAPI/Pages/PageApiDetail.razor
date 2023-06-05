@@ -1,0 +1,54 @@
+﻿@using ServicioAPI.Pages.Models;
+@page "/api/{userId:int}/details"
+
+@inject HttpClient httpClient
+
+
+
+<h3>Álbumes del usuario</h3>
+
+@if (albums == null)
+{
+    <p>Cargando álbumes...</p>
+}
+else if (albums.Count == 0)
+{
+    <p>No se encontraron álbumes para este usuario.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var album in albums)
+            {
+                <tr>
+                    <td>@album.id</td>
+                    <td>@album.title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    @code {
+        [Parameter]
+        public int UserId { get; set; }
+        private List<Album> albums;
+
+        protected override async Task OnInitializedAsync()
+        {
+            
+            albums = await httpClient.GetFromJsonAsync<List<Album>>($"https://jsonplaceholder.typicode.com/albums?userId={UserId}");
+        }
+    }
+
+}
